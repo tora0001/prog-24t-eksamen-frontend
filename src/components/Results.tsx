@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import CreateResult from "./CreateResult.tsx";
 
 interface Resultat {
     id: number;
@@ -12,10 +13,26 @@ interface Resultat {
     };
 }
 
+interface Deltager {
+    id: number;
+    name: string;
+    gender: string;
+    age: number;
+    club: string;
+    disciplin: string;
+}
+
 const ResultsList = () => {
     const [results, setResults] = useState<Resultat[]>([]);
+    const [participants, setParticipants] = useState<Deltager[]>([]);
 
     useEffect(() => {
+        const fetchParticipants = async () => {
+            const response = await fetch('http://localhost:8080/deltagere');
+            const data: Deltager[] = await response.json();
+            setParticipants(data);
+        };
+
         const fetchResults = async () => {
             const response = await fetch('http://localhost:8080/resultater');
             const data: Resultat[] = await response.json();
@@ -23,6 +40,7 @@ const ResultsList = () => {
         };
 
         fetchResults();
+        fetchParticipants();
     }, []);
 
     return (
@@ -35,6 +53,7 @@ const ResultsList = () => {
                     </li>
                 ))}
             </ul>
+            <CreateResult participants={participants} />
         </div>
     );
 };

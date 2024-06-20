@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditParticipant from './EditParticipant';
 import DeleteParticipant from './DeleteParticipant';
+import CreateDeltager from "./CreatePaticipant.tsx";
 
 interface Deltager {
     id: number;
@@ -19,6 +20,7 @@ const ParticipantsList = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGender, setSelectedGender] = useState('');
+    const [selectedDisciplin, setSelectedDisciplin] = useState('')
     const [selectedClub, setSelectedClub] = useState('');
 
     useEffect(() => {
@@ -37,10 +39,11 @@ const ParticipantsList = () => {
             participants.filter(deltager =>
                 deltager.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
                 (selectedGender === '' || deltager.gender === selectedGender) &&
+                (selectedDisciplin === '' || deltager.disciplin === selectedDisciplin) &&
                 (selectedClub === '' || deltager.club === selectedClub)
             )
         );
-    }, [searchTerm, selectedGender, selectedClub, participants]);
+    }, [searchTerm, selectedGender, selectedDisciplin, selectedClub, participants]);
 
     const handleEditClick = (deltager: Deltager) => {
         setSelectedDeltager(deltager);
@@ -78,6 +81,10 @@ const ParticipantsList = () => {
         setSelectedGender(event.target.value);
     };
 
+    const handleDisciplinChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedDisciplin(event.target.value);
+    };
+
     const handleClubChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedClub(event.target.value);
     };
@@ -96,10 +103,17 @@ const ParticipantsList = () => {
                 <option value="Male">Mand</option>
                 <option value="Female">Kvinde</option>
             </select>
+            <select value={selectedDisciplin} onChange={handleDisciplinChange}>
+                <option value="">Alle discipliner</option>
+                <option value="100 meter løb">100 meter løb</option>
+                <option value="Spydkast">Spydkast</option>
+                <option value="Højdespring">Højdespring</option>
+                <option value="Maratonløb">Maratonløb</option>
+            </select>
             <select value={selectedClub} onChange={handleClubChange}>
                 <option value="">Alle klubber</option>
                 {/* Generer klubboptions dynamisk baseret på de eksisterende klubber i dataene */}
-                {Array.from(new Set(participants.map(p => p.club))).map(club => (
+                {Array.from(new Set(participants.map(p => p.club))).sort().map(club => (
                     <option key={club} value={club}>{club}</option>
                 ))}
             </select>
@@ -117,7 +131,7 @@ const ParticipantsList = () => {
                 <div className="modal">
                     <div className="modal-content">
                         <span className="close" onClick={closeEditModal}>&times;</span>
-                        <EditParticipant deltager={selectedDeltager} />
+                        <EditParticipant deltager={selectedDeltager}/>
                     </div>
                 </div>
             )}
@@ -129,6 +143,7 @@ const ParticipantsList = () => {
                     onDelete={handleDelete}
                 />
             )}
+            <CreateDeltager/>
         </div>
     );
 };

@@ -39,7 +39,7 @@ const CreateDeltager = () => {
 
     return (
         <div>
-            <h1>Opret Ny Deltager</h1>
+            <h2>Opret Ny Deltager</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">Navn:</label>
@@ -54,7 +54,7 @@ const CreateDeltager = () => {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="disciplin">Køn:</label>
+                    <label htmlFor="disciplin">Disciplin:</label>
                     <select id="disciplin" name="disciplin" value={deltager.disciplin} onChange={handleChange} required>
                         <option value="">Vælg disciplin</option>
                         <option value="100 meter løb">100 meter løb</option>
