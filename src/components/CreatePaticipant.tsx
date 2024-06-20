@@ -5,10 +5,11 @@ interface Deltager {
     gender: string;
     age: number;
     club: string;
+    disciplin: string;
 }
 
 const CreateDeltager = () => {
-    const [deltager, setDeltager] = useState<Deltager>({ name: '', gender: '', age: 0, club: '' });
+    const [deltager, setDeltager] = useState<Deltager>({ name: '', gender: '', age: 0, club: '', disciplin:'' });
     const [message, setMessage] = useState<string>('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -27,7 +28,7 @@ const CreateDeltager = () => {
 
             if (response.ok) {
                 setMessage('Deltager oprettet succesfuldt!');
-                setDeltager({ name: '', gender: '', age: 0, club: '' });
+                setDeltager({ name: '', gender: '', age: 0, club: '', disciplin:'' });
             } else {
                 setMessage('Der opstod en fejl ved oprettelsen af deltageren.');
             }
@@ -42,7 +43,7 @@ const CreateDeltager = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">Navn:</label>
-                    <input type="text" id="name" name="name" value={deltager.name} onChange={handleChange} required />
+                    <input type="text" id="name" name="name" value={deltager.name} onChange={handleChange} required/>
                 </div>
                 <div>
                     <label htmlFor="gender">Køn:</label>
@@ -53,12 +54,22 @@ const CreateDeltager = () => {
                     </select>
                 </div>
                 <div>
+                    <label htmlFor="disciplin">Køn:</label>
+                    <select id="disciplin" name="disciplin" value={deltager.disciplin} onChange={handleChange} required>
+                        <option value="">Vælg disciplin</option>
+                        <option value="100 meter løb">100 meter løb</option>
+                        <option value="Spydkast">Spydkast</option>
+                        <option value="Højdespring">Højdespring</option>
+                        <option value="Maratonløb">Maratonløb</option>
+                    </select>
+                </div>
+                <div>
                     <label htmlFor="age">Alder:</label>
-                    <input type="number" id="age" name="age" value={deltager.age} onChange={handleChange} required />
+                    <input type="number" id="age" name="age" value={deltager.age} onChange={handleChange} required/>
                 </div>
                 <div>
                     <label htmlFor="club">Klub:</label>
-                    <input type="text" id="club" name="club" value={deltager.club} onChange={handleChange} required />
+                    <input type="text" id="club" name="club" value={deltager.club} onChange={handleChange} required/>
                 </div>
                 <button type="submit">Opret Deltager</button>
             </form>
