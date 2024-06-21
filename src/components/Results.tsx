@@ -5,12 +5,8 @@ interface Resultat {
     id: number;
     date: string;
     resultvalue: number;
-    deltager: {
-        name: string;
-    };
-    disciplin: {
-        name: string;
-    };
+    deltager: string;
+    disciplin: string;
 }
 
 interface Deltager {
@@ -49,7 +45,7 @@ const ResultsList = () => {
             <ul>
                 {results.map(resultat => (
                     <li key={resultat.id}>
-                        {resultat.date}, {resultat.resultvalue}, {resultat.deltager.name}, {resultat.disciplin.name}
+                        {resultat.date}, {resultat.resultvalue}, {resultat.deltager}, {resultat.disciplin}
                     </li>
                 ))}
             </ul>

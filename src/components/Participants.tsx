@@ -112,7 +112,6 @@ const ParticipantsList = () => {
             </select>
             <select value={selectedClub} onChange={handleClubChange}>
                 <option value="">Alle klubber</option>
-                {/* Generer klubboptions dynamisk baseret på de eksisterende klubber i dataene */}
                 {Array.from(new Set(participants.map(p => p.club))).sort().map(club => (
                     <option key={club} value={club}>{club}</option>
                 ))}
